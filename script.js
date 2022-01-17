@@ -1,93 +1,59 @@
-//Define vars to hold time values
-let seconds = 0;
-let minutes = 0;
-let hours = 0;
+var timeH = document.querySelector("h1");
+var list =document.getElementById("list");
 
-//Define vars to hold "display" value
-let displaySeconds = 0;
-let displayMinutes = 0;
-let displayHours = 0;
-
-//Define var to hold setInterval() function
-let interval = null;
-
-//Define var to hold stopwatch status
-let status = "stopped";
-
-//Stopwatch function (logic to determine when to increment next value, etc.)
-function stopWatch(){
-
-    seconds++;
-
-    //Logic to determine when to increment next value
-    if(seconds / 60 === 1){
-        seconds = 0;
-        minutes++;
-
-        if(minutes / 60 === 1){
-            minutes = 0;
-            hours++;
-        }
-
-    }
-
-    //If seconds/minutes/hours are only one digit, add a leading 0 to the value
-    if(seconds < 10){
-        displaySeconds = "0" + seconds.toString();
-    }
-    else{
-        displaySeconds = seconds;
-    }
-
-    if(minutes < 10){
-        displayMinutes = "0" + minutes.toString();
-    }
-    else{
-        displayMinutes = minutes;
-    }
-
-    if(hours < 10){
-        displayHours = "0" + hours.toString();
-    }
-    else{
-        displayHours = hours;
-    }
-
-    //Display updated time values to user
-    document.getElementById("display").innerHTML = displayHours + ":" + displayMinutes + ":" + displaySeconds;
-
-}
+let timeSecond = 0;
+        
+var mini=0;
+var maxi=60;
+var countUp;
+var btn =document.getElementById("btn");
 
 
 
-function startStop(){
 
-    if(status === "stopped"){
 
-        //Start the stopwatch (by calling the setInterval() function)
-        interval = window.setInterval(stopWatch, 1000);
-        document.getElementById("startStop").innerHTML = "Stop";
-        status = "started";
+  function displayTime(second) {
+      let hr = Math.floor(second/3600)
+      
+    let min = Math.floor(second /60 );
+      if(min>60){min=min%60}
+    
 
-    }
-    else{
-
-        window.clearInterval(interval);
-        document.getElementById("startStop").innerHTML = "Start";
-        status = "stopped";
-
-    }
-
-}
-
-//Function to reset the stopwatch
-function reset(){
-
-    window.clearInterval(interval);
-    seconds = 0;
-    minutes = 0;
-    hours = 0;
-    document.getElementById("display").innerHTML = "00:00:00";
-    document.getElementById("startStop").innerHTML = "Start";
-
-}
+    let sec = Math.floor(second %60);
+    timeH.innerHTML = `${hr < 10 ? "0" : ""}${hr}:${min < 10 ? "0" : ""}${min}:${sec < 10 ? "0" : ""}${sec}`;
+  }
+  
+function start(){
+     countUp = setInterval(() => {
+        timeSecond++;
+        displayTime(timeSecond);
+        
+      }, 10);
+     
+  }
+  function pause(){
+      clearInterval(countUp);
+  }
+  function reset(){
+      clearInterval(countUp);
+      timeSecond=0;
+      timeH.innerHTML='00:00:00';
+      btn.innerText="Start";
+      list.innerHTML="";
+      
+  }
+  function lap(){
+    var li =document.createElement("li");
+      li.innerHTML=timeH.innerHTML;
+      list.appendChild(li);
+  }
+  function startpause(){
+      if(btn.innerText=="Start"){
+          start();
+          btn.innerText="Pause";
+      }
+      else{
+          pause();
+          btn.innerText="Start"
+      }
+  }

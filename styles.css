@@ -1,0 +1,21 @@
+.container{
+    height: 300px;
+    width: 100%;
+}
+
+#display{
+    width: 100%;
+    font-size: 72px;
+    text-align: center;
+    margin: 0px auto;
+}
+
+.buttons{
+    text-align: center;
+}
+   body{
+            display: flex;
+            justify-content: center;
+            align-items: center;
+     background-image: url(https://images.pexels.com/photos/7954883/pexels-photo-7954883.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=1700);
+}
